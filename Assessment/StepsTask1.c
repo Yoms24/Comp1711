@@ -105,4 +105,8 @@ int main() {
 
     free(data_arr);
     return 0;
+
+    // https://dev.to/crazysamurai/how-to-increase-the-size-of-an-array-in-c-50o0
+    //https://www.programiz.com/c-programming/library-function/string.h/strcpy
+    // https://www.tutorialspoint.com/c_standard_library/c_function_strtok.htm
 }
