@@ -11,7 +11,6 @@ typedef struct {
 
 // Define any additional variables here
 const char delimiter = ',';
-const char fileName[] = "FitnessData_2023.csv";
 
 // This is your helper function. Do not change it in any way.
 // Inputs: character array representing a row; the delimiter character
@@ -44,51 +43,42 @@ void tokeniseRecord(const char *input, const char *delimiter, char *date, char *
 // Complete the main function
 int main() {
     FILE *file;
-    FITNESS_DATA * steps_array = NULL;
-    int size = 0;
-    int capacity = 10;
-    char row[50];
+    char fileName[] = "FitnessData_2023.csv";
 
     file = fopen(fileName, "r");
 
-    // Check fiel is able to be opened.
     if (file == NULL) {
         perror("Failed to open file");
         return 1;
     }
 
-    steps_array = (FITNESS_DATA *) malloc(capacity * sizeof(FITNESS_DATA));
+    // Create initial array size and allocate.
+    FITNESS_DATA *data_arr = NULL;
+    int size = 0; // Size of the array
+    int capacity = 10; // Capacity of the array 
 
-    // Check memory allocation was successful.
-    if (steps_array == NULL)
+    data_arr = (FITNESS_DATA *)malloc(capacity * sizeof(FITNESS_DATA)); //Initial capacity at 10, capacity * size of FITNESS_DATA to allocate just enough memory
+
+    if (data_arr == NULL)
     {
         perror("Error allocating memory");
         fclose(file);
         return 1;
     }
 
+    char row[50];
+
     while (fgets(row, sizeof(row), file) != NULL) {
-        // Resize the array if there's more items in the file to be added.
-        // Found how to resize array here - https://dev.to/crazysamurai/how-to-increase-the-size-of-an-array-in-c-50o0
-        if (size == capacity) {
+        if (size == capacity) { // If it reaches capacity, it multiplies the capacity by 2 and reallocated memory
+            // Expand array size and reallocate
             capacity *= 2;
-            FITNESS_DATA *temp_array = (FITNESS_DATA *) malloc(capacity * sizeof(FITNESS_DATA));
-            // Check memory allocation was successful.
-            if (temp_array == NULL)
-            {
+            data_arr = (FITNESS_DATA *)realloc(data_arr, capacity * sizeof(FITNESS_DATA));
+
+            if (data_arr == NULL) {
                 perror("Error allocating memory");
                 fclose(file);
                 return 1;
             }
-
-
-            for (int i = 0; i < capacity; i++) {
-                temp_array[i] = steps_array[i];
-            }
-
-            free(steps_array);
-            steps_array = temp_array;
-            temp_array = NULL;
         }
 
         // Define temp variables and tokenise row
@@ -97,32 +87,23 @@ int main() {
         tokeniseRecord(row, &delimiter, date, time, steps);
 
         // Copy temp values into array.
-        // Saw strcpy in the helper function and looked it up.
-        // https://www.programiz.com/c-programming/library-function/string.h/strcpy
-        strcpy(steps_array[size].date, date);
-        strcpy(steps_array[size].time, time);
-        steps_array[size].steps = atoi(steps); // Use atoi to convert sting to int.
-
+        strcpy(data_arr[size].date, date);
+        strcpy(data_arr[size].time, time);
+        data_arr[size].steps = atoi(steps);
+        
         size++;
     }
 
     fclose(file);
 
-    printf("Number of records in file: %d\n\n", size);
+    printf("Number of records in file: %d\n", size);
 
-    // Output only the first three items in the array.
     for (int i = 0; i < 3; i++)
     {
-        printf("%s/%s/%d\n", steps_array[i].date, steps_array[i].time, steps_array[i].steps);
+        printf("%s/%s/%d\n", data_arr[i].date, data_arr[i].time, data_arr[i].steps);
     }
 
-    // Debugging - Outputs EVERY item in array.
-    // for (int i = 0; i < size; i++)
-    // {
-    //     printf("%s/%s/%d\n", steps_array[i].date, steps_array[i].time, steps_array[i].steps);
-    // }
-
-    free(steps_array);
+    free(data_arr);
     return 0;
 
     // https://dev.to/crazysamurai/how-to-increase-the-size-of-an-array-in-c-50o0
