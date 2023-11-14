@@ -86,11 +86,40 @@ int main()
 
         case 'C':
         case 'c':
+            counter = 0;
+            float lowest = 100;
+            while (fgets(line, buffer_size, input))
+            {
+                // split up the line and store it in the right place
+                // using the & operator to pass in a pointer to the bloodIron so it stores it
+                tokeniseRecord(line, ",", daily_readings[counter].date, &daily_readings[counter].bloodIron);
+                if (daily_readings[counter].bloodIron < lowest)
+                {
+                    lowest = daily_readings[counter].bloodIron;
+                }
+                counter++;
+            }
+             printf("Your lowest blood iron level was %.1f\n", lowest);
+
             return 0;
             break;
 
         case 'D':
         case 'd':
+            counter = 0;
+            float highest = 0;
+            while (fgets(line, buffer_size, input))
+            {
+                // split up the line and store it in the right place
+                // using the & operator to pass in a pointer to the bloodIron so it stores it
+                tokeniseRecord(line, ",", daily_readings[counter].date, &daily_readings[counter].bloodIron);
+                if (daily_readings[counter].bloodIron > highest)
+                {
+                    highest = daily_readings[counter].bloodIron;
+                }
+                counter++;
+            }
+             printf("Your highest blood iron level was %.1f\n", highest);
             return 0;
             break;
 
