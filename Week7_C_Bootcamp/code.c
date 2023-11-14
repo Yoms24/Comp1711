@@ -125,6 +125,22 @@ int main()
 
         case 'E':
         case 'e':
+            counter = 0;
+            char month;
+
+            printf("Please enter the name of the month: ");
+            month = getchar();
+
+            while (fgets(line, buffer_size, input))
+            {
+                // split up the line and store it in the right place
+                // using the & operator to pass in a pointer to the bloodIron so it stores it
+                tokeniseRecord(line, ",", daily_readings[counter].date, &daily_readings[counter].bloodIron);
+                strstr(daily_readings[counter].date, month);
+
+                counter++;
+            }
+
             return 0;
             break;
 
