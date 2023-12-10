@@ -37,15 +37,27 @@ void tokeniseRecord(const char *input, const char *delimiter,
 
                     }
 
+int getTotalSteps(FITNESS_DATA data[], int dataCount) {
+    int totalSteps = 0;
+    for (int i = 0; i < dataCount; i++) {
+        totalSteps += data[i].steps;
+    }
+    return totalSteps;
+}
 
-
+double getAverageSteps(FITNESS_DATA data[], int dataCount) {
+    int totalSteps = getTotalSteps(data, dataCount);
+    return (double)totalSteps / dataCount;
+}
 
 // Complete the main function
 // Inspired by Week 7 Classwork
 int main() {
-    FILE *file;
-    const char delimiter = ',';
-    char choice;
+
+    char filename[256];
+    FITNESS_DATA *data = NULL;
+    int dataCount = 0;
+    int userInput;
 
     while (1)
     {
@@ -59,32 +71,32 @@ int main() {
         printf("Q: Exit the program\n");
 
         // Store the character given as an input
-        choice = getchar();
-
-        while (getchar() != '\n');
+        scanf("%d", &userInput);
 
         // switch statement to control the menu.
-        switch (choice)
+        switch (userInput)
         {
         // this allows for either capital or lower case
         case 'A':
         case 'a':
         printf("Input Filename: \n");
-        char fileName[] = getchar();
+        scanf("%s", filename);
 
-       /* FILE *input = fopen(filename, "r");
+       FILE *input = fopen(filename, "r");
         if (!input)
         {
             printf("Error: File could not be opened\n");
             return 1;
         }
-        */
+    
         return 0;
         break;
 
         case 'B':
         case 'b':
-            
+
+        printf("Total number of records: %d\n", dataCount);
+        break;
 
         case 'C':
         case 'c':
@@ -96,6 +108,7 @@ int main() {
 
         case 'E':
         case 'e':
+            printf("Average step count: %.2f\n", getAverageSteps(data, dataCount));
 
             return 0;
             break;
@@ -105,15 +118,6 @@ int main() {
             return 0;
             break;
 
-        case 'G':
-        case 'g':
-            return 0;
-            break;
-
-        case 'Q':
-        case 'q':
-            return 0;
-            break;
 
         //If they dont choose a eligibile option
         default:
