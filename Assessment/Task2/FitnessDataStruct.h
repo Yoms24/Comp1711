@@ -20,21 +20,6 @@ double round(double x) {
     }
 }
 
-void printFewestStepsData(FITNESS_DATA data[], int dataCount)
-{
-    int fewestSteps = 1000000;
-    int index = 0;
-
-    for (int i = 0; i < dataCount; i++) {
-        if (data[i].steps < fewestSteps) {
-            fewestSteps = data[i].steps;
-            index = i;
-        }
-    }
-
-    printf("Fewest steps: %s %s\n", data[index].date, data[index].time);
-}
-
 void printLargestStepsData(FITNESS_DATA data[], int dataCount)
 {
     int mostSteps = 0;
@@ -48,6 +33,21 @@ void printLargestStepsData(FITNESS_DATA data[], int dataCount)
     }
 
     printf("Largest steps: %s %s\n", data[index].date, data[index].time);
+}
+
+void printFewestStepsData(FITNESS_DATA data[], int dataCount)
+{
+    int fewestSteps = 1000000;
+    int index = 0;
+
+    for (int i = 0; i < dataCount; i++) {
+        if (data[i].steps < fewestSteps) {
+            fewestSteps = data[i].steps;
+            index = i;
+        }
+    }
+
+    printf("Fewest steps: %s %s\n", data[index].date, data[index].time);
 }
 
 void printLongestPeriodData(FITNESS_DATA data[], int dataCount)
