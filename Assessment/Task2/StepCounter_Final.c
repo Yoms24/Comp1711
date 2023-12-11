@@ -57,7 +57,7 @@ int main() {
     char filename[256];
     FITNESS_DATA *data = NULL;
     int dataCount = 0;
-    int userInput;
+    char choice;
 
     while (1)
     {
@@ -71,16 +71,18 @@ int main() {
         printf("Q: Exit the program\n");
 
         // Store the character given as an input
-        scanf("%d", &userInput);
+        choice = getchar();
 
+        while (getchar() != '\n');
         // switch statement to control the menu.
-        switch (userInput)
+        switch (choice)
         {
         // this allows for either capital or lower case
         case 'A':
         case 'a':
         printf("Input Filename: \n");
         scanf("%s", filename);
+        data = importFitnessData(filename, &dataCount);
 
        FILE *input = fopen(filename, "r");
         if (!input)
@@ -88,8 +90,10 @@ int main() {
             printf("Error: File could not be opened\n");
             return 1;
         }
+        else    {
+            printf("File loaded successfully\n");
+        }
     
-        return 0;
         break;
 
         case 'B':
@@ -100,11 +104,13 @@ int main() {
 
         case 'C':
         case 'c':
-            
+           return 0;
+           break;
 
         case 'D':
         case 'd':
-           
+           return 0;
+           break;
 
         case 'E':
         case 'e':
@@ -118,10 +124,16 @@ int main() {
             return 0;
             break;
 
+        case 'Q':
+        case 'q':
+            return 0;
+            break;
 
         //If they dont choose a eligibile option
         default:
             printf("Not an Option\n");
+            
             break;
         }
+    }
 }

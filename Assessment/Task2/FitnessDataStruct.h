@@ -10,7 +10,9 @@ typedef struct {
 	int steps;
 } FITNESS_DATA;
 
+FITNESS_DATA *importFitnessData(const char *filename, int *dataCount);
 // Helper function prototypes
 void tokeniseRecord(const char *input, const char *delimiter, char *date, char *time, char *steps);
+
 
 #endif // FITNESS_DATA_STRUCT_H
