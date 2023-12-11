@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "Helpers.h"
 #include "FitnessDataStruct.h"
 
 // Struct moved to header file
@@ -100,74 +99,6 @@ FITNESS_DATA* importFitnessData(const char* filename, int* dataCount) {
     return steps_array;
 }
 
-void printFewestStepsData(FITNESS_DATA data[], int dataCount)
-{
-    int fewestSteps = 1000000;
-    int index = 0;
-
-    for (int i = 0; i < dataCount; i++) {
-        if (data[i].steps < fewestSteps) {
-            fewestSteps = data[i].steps;
-            index = i;
-        }
-    }
-
-    printf("Fewest steps: %s %s\n", data[index].date, data[index].time);
-}
-
-void printLargestStepsData(FITNESS_DATA data[], int dataCount)
-{
-    int mostSteps = 0;
-    int index = 0;
-
-    for (int i = 0; i < dataCount; i++) {
-        if (data[i].steps > mostSteps) {
-            mostSteps = data[i].steps;
-            index = i;
-        }
-    }
-
-    printf("Largest steps: %s %s\n", data[index].date, data[index].time);
-}
-
-void printLongestPeriodData(FITNESS_DATA data[], int dataCount)
-{
-    int longestPeriod = 0;
-    int currentPeriod = 0;
-    int startIndex = 0;
-    int endIndex = 0;
-
-    for (int i = 0; i < dataCount; i++) {
-        if (data[i].steps > 500) {
-            currentPeriod++;
-        }
-        else {
-            if (currentPeriod > longestPeriod) {
-                longestPeriod = currentPeriod;
-                endIndex = i - 1;
-                startIndex = endIndex - longestPeriod + 1;
-            }
-            currentPeriod = 0;
-        }
-    }
-
-    printf("Logest period start: %s %s\n", data[startIndex].date, data[startIndex].time);
-    printf("Logest period end: %s %s\n", data[endIndex].date, data[endIndex].time);
-}
-
-void printMeanStepCountData(FITNESS_DATA data[], int dataCount)
-{
-    int totalSteps = 0;
-    for (int i = 0; i < dataCount; i++)
-    {
-        totalSteps += data[i].steps;
-    }
-
-    double meanStepCount = (double)totalSteps / dataCount;
-
-    printf("Mean step count: %.0f\n", round(meanStepCount));
-}
-
 int main() {
     char input;
     char filename[256];
@@ -223,7 +154,7 @@ int main() {
             case 'q':
                 return 0;
             default:
-                printf("Invalid command\n");
+                printf("Invalid command. Try again.\n");
                 break;
         }
     }
