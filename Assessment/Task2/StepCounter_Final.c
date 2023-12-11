@@ -7,7 +7,7 @@
 
 // Define any additional variables here
 // Global variables for filename and FITNESS_DATA array
-
+FITNESS_DATA *importFitnessData(const char *filename, int *dataCount);
 
 // This is your helper function. Do not change it in any way.
 // Inputs: character array representing a row; the delimiter character
@@ -82,7 +82,7 @@ int main() {
         case 'a':
         printf("Input Filename: \n");
         scanf("%s", filename);
-        data = importFitnessData(filename, &dataCount);
+       // data = importFitnessData(filename, &dataCount);
 
        FILE *input = fopen(filename, "r");
         if (!input)
